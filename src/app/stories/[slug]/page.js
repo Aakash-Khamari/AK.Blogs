@@ -91,7 +91,7 @@ export default function StoryPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full aspect-[21/9] md:aspect-[2/1] rounded-[2rem] overflow-hidden shadow-sm border border-neutral-200 bg-neutral-100"
           >
-            <img src={story.cover_image_url} alt="Cover" className="w-full h-full object-cover" />
+            <img src={story.cover_image_url} alt="Cover" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('hidden') }} />
           </motion.div>
         )}
       </div>
