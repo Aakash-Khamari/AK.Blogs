@@ -134,9 +134,9 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-orange-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Bigger Picture</h2>
             </div>
-            <div className="p-8 bg-neutral-100 rounded-3xl border border-neutral-200 text-[#222]">
-              {story.content_picture.split('\n').map((paragraph, i) => (
-                <p key={i} className={i === 0 ? "mb-4" : ""}>{paragraph}</p>
+            <div className="p-8 bg-neutral-100 rounded-3xl border border-neutral-200 text-[#222] space-y-6">
+              {story.content_picture.split('\n').filter(p => p.trim() !== '').map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
               ))}
             </div>
           </motion.section>
