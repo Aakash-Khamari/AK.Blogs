@@ -1,5 +1,7 @@
 'use client'
 
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useParams } from 'next/navigation'
@@ -89,7 +91,7 @@ export default function StoryPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full aspect-[21/9] md:aspect-[2/1] rounded-[2rem] overflow-hidden shadow-sm border border-neutral-200 bg-neutral-100"
           >
-            <img src={story.cover_image_url} alt="Cover" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('hidden') }} />
+            <img src={story.cover_image_url} alt="Cover" className="w-full h-full object-cover" />
           </motion.div>
         )}
       </div>
@@ -104,10 +106,10 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-red-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Story</h2>
             </div>
-            <div className="space-y-6 text-[#111]">
-              {(story.content_story || story.content).split('\n').map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))}
+            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {story.content_story || story.content}
+              </ReactMarkdown>
             </div>
           </motion.section>
         )}
@@ -119,10 +121,10 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-blue-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">My Reflection</h2>
             </div>
-            <div className="space-y-6 text-[#111]">
-              {story.content_reflection.split('\n').map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))}
+            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {story.content_reflection}
+              </ReactMarkdown>
             </div>
           </motion.section>
         )}
@@ -134,10 +136,12 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-orange-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Bigger Picture</h2>
             </div>
-            <div className="p-8 bg-neutral-100 rounded-3xl border border-neutral-200 text-[#222] space-y-6">
-              {story.content_picture.split('\n').filter(p => p.trim() !== '').map((paragraph, i) => (
-                <p key={i}>{paragraph}</p>
-              ))}
+            <div className="p-8 bg-neutral-100 rounded-3xl border border-neutral-200">
+              <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8]">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {story.content_picture}
+                </ReactMarkdown>
+              </div>
             </div>
           </motion.section>
         )}
