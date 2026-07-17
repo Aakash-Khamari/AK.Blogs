@@ -1,14 +1,21 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Save, FileText, Image as ImageIcon } from 'lucide-react'
+import { useParams, useRouter } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
-export default function AdminEditor() {
+export default function AdminEditorEdit() {
+  const params = useParams()
+  const router = useRouter()
+  const id = params.id
+
   const [postType, setPostType] = useState('story') // 'story' or 'idea'
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
   const [coverImageUrl, setCoverImageUrl] = useState('')
+  const [published, setPublished] = useState(true)
 
   // Story specific state
   const [storyContent, setStoryContent] = useState('')
@@ -21,10 +28,44 @@ export default function AdminEditor() {
   const [ideaContent, setIdeaContent] = useState('')
   const [discussionPrompt, setDiscussionPrompt] = useState('')
 
-  const router = require('next/navigation').useRouter()
-  const { supabase } = require('@/lib/supabase')
+  const [loading, setLoading] = useState(true)
 
-  const handleSave = async (e, published = true) => {
+  useEffect(() => {
+    async function loadPost() {
+      if (!id) return
+      
+      const { data, error } = await supabase.from('posts').select('*').eq('id', id).single()
+      if (error) {
+        console.error(error)
+        alert('Could not load post')
+        router.push('/admin')
+        return
+      }
+
+      if (data) {
+        setPostType(data.type || 'story')
+        setTitle(data.title || '')
+        setCategory(data.category || '')
+        setCoverImageUrl(data.cover_image_url || '')
+        setPublished(data.published)
+
+        if (data.type === 'story') {
+          setStoryContent(data.content_story || '')
+          setReflection(data.content_reflection || '')
+          setBiggerPicture(data.content_picture || '')
+          setQuestions(data.content_questions ? data.content_questions.join('\n') : '')
+          setBehindTheStory(data.content_behind || '')
+        } else {
+          setIdeaContent(data.content || '')
+          setDiscussionPrompt(data.discussion_prompt || '')
+        }
+      }
+      setLoading(false)
+    }
+    loadPost()
+  }, [id, router])
+
+  const handleSave = async (e, isPublished = true) => {
     e.preventDefault()
     
     // Generate slug from title
@@ -35,7 +76,7 @@ export default function AdminEditor() {
       slug: generatedSlug,
       category: category || 'Uncategorized',
       cover_image_url: coverImageUrl || null,
-      published,
+      published: isPublished,
       type: postType,
     }
 
@@ -50,18 +91,18 @@ export default function AdminEditor() {
       postData.discussion_prompt = discussionPrompt
     }
 
-    // Try to get image from the input (which is unfortunately not bound to state right now, let's just leave null unless we add state for it)
-
     try {
-      const { error } = await supabase.from('posts').insert([postData])
+      const { error } = await supabase.from('posts').update(postData).eq('id', id)
       if (error) throw error
-      alert(`Saved as ${postType.toUpperCase()}!`)
+      alert(`Updated ${postType.toUpperCase()}!`)
       router.push('/admin')
     } catch (err) {
       console.error(err)
-      alert('Error saving post: ' + err.message)
+      alert('Error updating post: ' + err.message)
     }
   }
+
+  if (loading) return <div className="min-h-screen bg-neutral-50 p-12 text-neutral-500 font-medium">Loading post...</div>
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col">
@@ -72,14 +113,22 @@ export default function AdminEditor() {
             <ArrowLeft size={16} /> Dashboard
           </Link>
           <div className="h-6 w-px bg-neutral-300" />
-          <span className="font-black text-lg tracking-tighter">New Observation</span>
+          <span className="font-black text-lg tracking-tighter">Edit {postType === 'story' ? 'Observation' : 'Essay'}</span>
         </div>
-        <button 
-          onClick={handleSave}
-          className="flex items-center gap-2 bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-neutral-800 transition"
-        >
-          <Save size={16} /> Publish
-        </button>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={(e) => handleSave(e, false)}
+            className="text-neutral-500 font-bold uppercase tracking-widest text-xs hover:text-black transition"
+          >
+            Save as Draft
+          </button>
+          <button 
+            onClick={(e) => handleSave(e, true)}
+            className="flex items-center gap-2 bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-neutral-800 transition"
+          >
+            <Save size={16} /> Publish Changes
+          </button>
+        </div>
       </header>
 
       {/* Main Content */}
@@ -91,13 +140,13 @@ export default function AdminEditor() {
             onClick={() => setPostType('story')}
             className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'story' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
           >
-            Write a Story
+            Story Format
           </button>
           <button 
             onClick={() => setPostType('idea')}
             className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'idea' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
           >
-            Write an Idea (Essay)
+            Essay Format
           </button>
         </div>
 
@@ -114,7 +163,7 @@ export default function AdminEditor() {
             />
           </div>
           
-          <div className="flex gap-6">
+          <div className="flex flex-col md:flex-row gap-6">
             <div className="flex-1">
               <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-3">Category / Tag</label>
               <input 
