@@ -54,7 +54,7 @@ export default function HomeClient({ posts }) {
             I am Aakash Khamari
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-[#111] dark:text-white mb-8 leading-[0.95] drop-shadow-sm mix-blend-overlay">
+          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter text-[#111] dark:text-white mb-8 leading-[0.95] drop-shadow-sm mix-blend-overlay">
             SOME STORIES DESERVE MORE THAN <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-purple-600">3,000 CHARACTERS.</span>
           </h1>
           <p className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 font-medium max-w-2xl mx-auto bg-white/30 dark:bg-black/20 backdrop-blur-md p-4 rounded-2xl border border-white/40 dark:border-white/10">
@@ -85,7 +85,7 @@ export default function HomeClient({ posts }) {
           {/* Right Side: The "Roadmap" / Node Diagram */}
           <div className="lg:w-2/3 relative">
             {/* Vertical connecting line */}
-            <div className="absolute left-8 top-10 bottom-10 w-1 bg-neutral-100 rounded-full" />
+            <div className="absolute left-4 md:left-8 top-10 bottom-10 w-1 bg-neutral-100 rounded-full" />
             
             <div className="space-y-16">
               {posts && posts.length > 0 ? (
@@ -93,23 +93,23 @@ export default function HomeClient({ posts }) {
                   const color = getColorForCategory(story.category)
                   const icon = getIconForCategory(story.category)
                   return (
-                    <motion.div 
+                      <motion.div 
                       key={story.id}
                       initial={{ opacity: 0, x: 50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, margin: "-100px" }}
                       transition={{ duration: 0.7, delay: index * 0.1, type: "spring", stiffness: 100 }}
-                      className="relative pl-24"
+                      className="relative pl-12 md:pl-24"
                     >
-                      <div className={`absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 bg-gradient-to-br ${color} rounded-full z-10 shadow-lg`} />
-                      <div className="absolute left-8 top-1/2 -translate-y-1/2 w-16 h-1 bg-neutral-100" />
+                      <div className={`absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-5 h-5 bg-gradient-to-br ${color} rounded-full z-10 shadow-lg`} />
+                      <div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-8 md:w-16 h-1 bg-neutral-100" />
 
                       <Link href={`/${story.type === 'notebook' ? 'notebook' : 'observations'}/${story.slug}`}>
-                        <div className="bg-white dark:bg-[#111] p-10 rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-none border border-neutral-100 dark:border-neutral-800 group hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] transition-all duration-300 cursor-pointer relative overflow-hidden">
+                        <div className="bg-white dark:bg-[#111] p-6 md:p-10 rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-none border border-neutral-100 dark:border-neutral-800 group hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] transition-all duration-300 cursor-pointer relative overflow-hidden">
                           
                           <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
 
-                          <div className="flex justify-between items-center mb-6 relative z-10">
+                          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 sm:gap-0 mb-6 relative z-10">
                             <div className="flex items-center gap-3">
                               <div className={`p-2.5 bg-gradient-to-br ${color} rounded-xl shadow-md`}>
                                 {icon}
@@ -121,7 +121,7 @@ export default function HomeClient({ posts }) {
                             </span>
                           </div>
                           
-                          <h3 className="text-3xl font-black text-[#111] dark:text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-black group-hover:to-neutral-500 dark:group-hover:from-white dark:group-hover:to-neutral-400 transition-all relative z-10">
+                          <h3 className="text-2xl md:text-3xl font-black text-[#111] dark:text-white mb-4 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-black group-hover:to-neutral-500 dark:group-hover:from-white dark:group-hover:to-neutral-400 transition-all relative z-10">
                             {story.title}
                           </h3>
                           
