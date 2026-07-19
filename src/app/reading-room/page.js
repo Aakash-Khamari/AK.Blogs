@@ -3,133 +3,114 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { Search, Loader2 } from 'lucide-react'
+import { Loader2, Star, Quote } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 export default function ReadingRoomIndex() {
   const [libraryData, setLibraryData] = useState([])
   const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [activeFilter, setActiveFilter] = useState('All')
-  const [categories, setCategories] = useState(['All', 'observation', 'notebook', 'reading_room'])
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchReadingRoom = async () => {
       const { data, error } = await supabase
-        .from('posts')
+        .from('reading_room')
         .select('*')
-        .eq('published', true)
         .order('created_at', { ascending: false })
       
       if (data) {
         setLibraryData(data)
-        // Extract unique categories
-        const uniqueCategories = [...new Set(data.map(item => item.category))]
-        setCategories(['All', 'observation', 'notebook', 'reading_room', ...uniqueCategories.filter(Boolean)])
       }
       setLoading(false)
     }
 
-    fetchPosts()
+    fetchReadingRoom()
   }, [])
 
-  const filteredLibrary = libraryData.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase()))
-    
-    let matchesFilter = true
-    if (activeFilter !== 'All') {
-      if (activeFilter === 'observation' || activeFilter === 'notebook' || activeFilter === 'reading_room') {
-        matchesFilter = item.type === activeFilter
-      } else {
-        matchesFilter = item.category === activeFilter
-      }
-    }
-    
-    return matchesSearch && matchesFilter
-  })
-
   return (
-    <main className="min-h-screen bg-[#fcfbf9] pb-32 pt-12">
-      {/* Hero Section */}
-      <div className="max-w-6xl mx-auto px-6 mb-12">
-        <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[1.1] text-[#111] mb-6">
-          The <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">Reading Room.</span>
+    <main className="min-h-screen bg-white dark:bg-[#0a0a0a] pb-32 pt-24 transition-colors duration-500">
+      {/* Header Section */}
+      <div className="max-w-3xl mx-auto px-6 mb-20">
+        <h1 className="text-4xl md:text-5xl font-serif text-[#111] dark:text-white mb-6 tracking-tight">
+          Reading Room
         </h1>
-        <p className="text-xl text-neutral-500 font-medium max-w-2xl mb-12">
-          Books, articles, papers, and videos that influenced the thinking.
+        <p className="text-lg text-neutral-500 dark:text-neutral-400 font-sans max-w-2xl leading-relaxed">
+          Books, articles, papers, and essays that have influenced my thinking.
         </p>
-
-        {/* Search Bar */}
-        <div className="relative mb-8">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-neutral-400" />
-          </div>
-          <input
-            type="text"
-            placeholder="Search for an observation..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 bg-white border border-neutral-200 rounded-2xl focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 text-lg font-medium shadow-sm transition-all"
-          />
-        </div>
-
-        {/* Filters */}
-        <div className="flex flex-wrap gap-3">
-          {categories.map(tag => (
-            <button 
-              key={tag} 
-              onClick={() => setActiveFilter(tag)}
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-colors ${activeFilter === tag ? 'bg-green-600 text-white border-green-600' : 'bg-white text-neutral-600 border-neutral-200 hover:border-black'} border capitalize`}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* List */}
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="bg-white rounded-[2rem] border border-neutral-100 shadow-sm overflow-hidden">
-          {loading ? (
-            <div className="flex justify-center py-20 text-neutral-400">
-              <Loader2 className="animate-spin" size={32} />
-            </div>
-          ) : filteredLibrary.length > 0 ? (
-            filteredLibrary.map((item, index) => (
-              <motion.div 
-                key={item.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-              >
-                <Link href={item.type === 'observation' ? `/observations/${item.slug}` : (item.type === 'notebook' ? `/notebook/${item.slug}` : `/reading-room/${item.slug}`)}>
-                  <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-100 hover:bg-neutral-50 transition-colors group">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className={`text-xs font-black uppercase tracking-widest ${item.type === 'observation' ? 'text-red-500' : 'text-indigo-500'}`}>
-                          {item.type}
-                        </span>
-                        <span className="text-neutral-300">•</span>
-                        <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest">{item.category}</span>
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-black text-[#111] group-hover:text-green-600 transition-colors">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <div className="text-sm font-bold text-neutral-400 whitespace-nowrap">
-                      {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </div>
+      <div className="max-w-3xl mx-auto px-6 space-y-16">
+        {loading ? (
+          <div className="flex justify-center py-20 text-neutral-400">
+            <Loader2 className="animate-spin" size={32} />
+          </div>
+        ) : libraryData.length > 0 ? (
+          libraryData.map((item, index) => (
+            <motion.div 
+              key={item.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="border-b border-neutral-100 dark:border-neutral-900 pb-16 last:border-0"
+            >
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+                      {item.category || 'Book'}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-neutral-300 dark:bg-neutral-700"></span>
+                    <span className="text-xs font-medium text-neutral-400 dark:text-neutral-500">
+                      {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                    </span>
                   </div>
-                </Link>
-              </motion.div>
-            ))
-          ) : (
-            <div className="p-12 text-center text-neutral-500 font-medium">
-              No observations found matching "{searchQuery}".
-            </div>
-          )}
-        </div>
+                  {item.rating && (
+                    <div className="flex items-center gap-1 text-yellow-500">
+                      {[...Array(item.rating)].map((_, i) => (
+                        <Star key={i} size={14} fill="currentColor" />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-serif text-[#111] dark:text-neutral-100 tracking-tight">
+                    {item.link ? (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition-colors underline decoration-neutral-200 dark:decoration-neutral-800 underline-offset-4">
+                        {item.title}
+                      </a>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
+                  {item.author && (
+                    <div className="text-neutral-500 dark:text-neutral-400 font-sans mt-1">
+                      by {item.author}
+                    </div>
+                  )}
+                </div>
+
+                {item.why_it_mattered && (
+                  <div className="mt-2 text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-sans">
+                    <span className="font-bold text-[#111] dark:text-neutral-300">Why it mattered: </span>
+                    {item.why_it_mattered}
+                  </div>
+                )}
+
+                {item.favourite_quote && (
+                  <div className="mt-4 p-6 bg-neutral-50 dark:bg-[#111] border-l-2 border-red-500 rounded-r-2xl text-neutral-600 dark:text-neutral-400 font-serif italic relative">
+                    <Quote className="absolute top-4 right-4 text-neutral-200 dark:text-neutral-800 opacity-50" size={48} />
+                    "{item.favourite_quote}"
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))
+        ) : (
+          <div className="text-center py-20 text-neutral-500 font-medium border-t border-neutral-100 dark:border-neutral-900 pt-8">
+            The reading room is currently empty.
+          </div>
+        )}
       </div>
     </main>
   )

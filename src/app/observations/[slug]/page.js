@@ -21,6 +21,8 @@ const fadeUp = {
 export default function StoryPage() {
   const { slug } = useParams()
   const [story, setStory] = useState(null)
+  const [themes, setThemes] = useState([])
+  const [continueReading, setContinueReading] = useState([])
   const [loading, setLoading] = useState(true)
 
   // Reading progress
@@ -44,6 +46,33 @@ export default function StoryPage() {
       
       if (data) {
         setStory(data)
+        
+        // Fetch themes
+        const { data: ptData } = await supabase
+          .from('post_themes')
+          .select('theme_id')
+          .eq('post_id', data.id)
+          
+        if (ptData && ptData.length > 0) {
+          const themeIds = ptData.map(pt => pt.theme_id)
+          const { data: themesData } = await supabase
+            .from('themes')
+            .select('*')
+            .in('id', themeIds)
+          setThemes(themesData || [])
+        } else {
+          setThemes([])
+        }
+
+        // Fetch Next Articles for "Continue Reading"
+        const { data: nextPosts } = await supabase
+          .from('posts')
+          .select('title, slug, type')
+          .eq('published', true)
+          .neq('id', data.id)
+          .limit(3)
+        setContinueReading(nextPosts || [])
+
         // Increment views
         await supabase.rpc('increment_post_views', { post_id: data.id })
       }
@@ -86,17 +115,32 @@ export default function StoryPage() {
           animate="visible"
           variants={fadeUp}
         >
-          <div className="mb-6 flex items-center justify-between">
-            <div className="flex gap-4 text-sm text-neutral-500 font-bold uppercase tracking-widest">
-              <span>{new Date(story.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              <span>•</span>
-              <span>{story.category}</span>
+          <div className="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex flex-col gap-1">
+              <div className="text-sm text-neutral-500 font-bold uppercase tracking-widest">
+                Originally Published: {new Date(story.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              </div>
+              {story.last_updated && (
+                <div className="text-xs text-neutral-400 font-bold uppercase tracking-widest">
+                  Last Updated: {new Date(story.last_updated).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                </div>
+              )}
             </div>
             <SaveButton postSlug={story.slug} />
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-[1.15] mb-8 text-[#111]">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-[1.15] mb-6 text-[#111] dark:text-white">
             {story.title}
           </h1>
+          
+          {themes.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {themes.map(t => (
+                <Link key={t.id} href={`/themes/${t.slug}`} className="px-3 py-1 bg-neutral-100 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors">
+                  {t.name}
+                </Link>
+              ))}
+            </div>
+          )}
         </motion.div>
 
         {/* Cover Image */}
@@ -196,25 +240,31 @@ export default function StoryPage() {
           </motion.section>
         )}
 
-        {/* Continue Thinking Rabbit Hole */}
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
-          <div className="border-t border-neutral-200 pt-12 mt-16">
-            <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase mb-8 text-center">Continue Thinking</h2>
-            <div className="flex flex-col items-center gap-4 text-center max-w-sm mx-auto font-bold text-neutral-400">
-              <span className="text-black hover:text-red-500 cursor-pointer transition">Financial Literacy</span>
-              <span>↓</span>
-              <span className="text-black hover:text-red-500 cursor-pointer transition">Digital Trust</span>
-              <span>↓</span>
-              <span className="text-black hover:text-red-500 cursor-pointer transition">ATM UX</span>
-              <span>↓</span>
-              <span className="text-black hover:text-red-500 cursor-pointer transition">Cybersecurity</span>
+        {/* Continue Reading */}
+        {continueReading.length > 0 && (
+          <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
+            <div className="border-t border-neutral-200 dark:border-neutral-800 pt-12 mt-16">
+              <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase mb-8 text-center">Continue Reading</h2>
+              <div className="flex flex-col items-center gap-6 text-center max-w-sm mx-auto font-serif">
+                {continueReading.map((next, idx) => (
+                  <div key={next.slug} className="flex flex-col items-center">
+                    <Link href={`/${next.type === 'notebook' ? 'notebook' : 'observations'}/${next.slug}`} className="text-xl text-[#111] dark:text-white hover:text-red-500 transition-colors">
+                      {next.title}
+                    </Link>
+                    {idx < continueReading.length - 1 && <span className="text-neutral-300 dark:text-neutral-700 my-4">↓</span>}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </motion.section>
+          </motion.section>
+        )}
         
         {/* Discussion Section */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
-          <DiscussionBoard prompt={story.content_questions && story.content_questions[0] ? story.content_questions[0] : story.discussion_prompt || "What are your thoughts?"} postSlug={story.slug} />
+          <div className="border-t border-neutral-200 dark:border-neutral-800 pt-12 mt-16">
+            <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase mb-8 text-center">Reader Perspectives</h2>
+            <DiscussionBoard prompt={story.content_questions && story.content_questions[0] ? story.content_questions[0] : story.discussion_prompt || "Share your perspective on this observation."} postSlug={story.slug} />
+          </div>
         </motion.section>
 
       </div>
