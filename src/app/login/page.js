@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function Login() {
@@ -15,6 +15,7 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const [status, setStatus] = useState('idle') // idle, loading, success, error
   const [message, setMessage] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleAuth = async (e) => {
     e.preventDefault()
@@ -124,14 +125,23 @@ export default function Login() {
               <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">
                 Password
               </label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full px-6 py-4 rounded-xl border border-neutral-300 focus:outline-none focus:border-black focus:ring-1 focus:ring-black bg-white text-black font-medium"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-6 py-4 rounded-xl border border-neutral-300 focus:outline-none focus:border-black focus:ring-1 focus:ring-black bg-white text-black font-medium pr-14"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
 
             {isSignUp && (
@@ -139,14 +149,23 @@ export default function Login() {
                 <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">
                   Confirm Password
                 </label>
-                <input
-                  type="password"
-                  required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full px-6 py-4 rounded-xl border border-neutral-300 focus:outline-none focus:border-black focus:ring-1 focus:ring-black bg-white text-black font-medium"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-6 py-4 rounded-xl border border-neutral-300 focus:outline-none focus:border-black focus:ring-1 focus:ring-black bg-white text-black font-medium pr-14"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-black transition-colors"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
             )}
             
