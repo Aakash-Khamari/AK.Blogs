@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "AK Blogs",
-  description: "Observations from everyday life.",
+  title: "Aakash Khamari",
+  description: "Some stories deserve more than 3,000 characters.",
 };
 
 export default function RootLayout({ children }) {
