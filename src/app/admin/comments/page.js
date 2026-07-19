@@ -20,7 +20,7 @@ export default function AdminComments() {
         created_at,
         post_slug,
         user_id,
-        profiles ( display_name, email )
+        profiles ( display_name )
       `)
       .order('created_at', { ascending: false })
     
