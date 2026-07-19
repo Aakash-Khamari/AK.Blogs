@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthContext";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col bg-white text-[#111] dark:bg-[#0a0a0a] dark:text-[#e5e5e5] selection:bg-black/10 font-sans film-grain transition-colors duration-500">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
+            <ScrollToTop />
             <Navbar />
             {children}
           </AuthProvider>
