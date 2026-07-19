@@ -28,6 +28,7 @@ export default function Navbar() {
           <Link href="/reading-room" className="hover:text-black dark:hover:text-white transition">Reading Room</Link>
           <Link href="/now" className="hover:text-black dark:hover:text-white transition">Now</Link>
           <Link href="/about" className="hover:text-black dark:hover:text-white transition">About</Link>
+          <Link href="/contact" className="hover:text-black dark:hover:text-white transition">Contact</Link>
         </nav>
 
         {/* Right Side Actions (Desktop & Mobile) */}
@@ -90,6 +91,7 @@ export default function Navbar() {
               <Link href="/reading-room" onClick={() => setIsMobileMenuOpen(false)}>Reading Room</Link>
               <Link href="/now" onClick={() => setIsMobileMenuOpen(false)}>Now</Link>
               <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
               
               <div className="w-12 h-px bg-neutral-200 dark:bg-neutral-800 my-4" />
               
