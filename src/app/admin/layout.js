@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { LayoutDashboard, PenSquare, LogOut, Hash, Calendar, BookOpen, Briefcase } from 'lucide-react'
+import { LayoutDashboard, PenSquare, LogOut, Hash, Calendar, BookOpen, Briefcase, Mail } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, usePathname } from 'next/navigation'
@@ -78,6 +78,10 @@ export default function AdminLayout({ children }) {
           <Link href="/admin/projects" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/projects') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
             <Briefcase size={18} />
             Projects
+          </Link>
+          <Link href="/admin/newsletter" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/newsletter') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
+            <Mail size={18} />
+            Newsletter
           </Link>
         </nav>
 
