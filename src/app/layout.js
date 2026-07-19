@@ -3,7 +3,6 @@ import "./globals.css";
 import { AuthProvider } from "@/components/AuthContext";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import CustomCursor from "@/components/CustomCursor";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,7 +30,6 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col bg-[#fcfbf9] text-[#171717] selection:bg-black/10 font-sans film-grain">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-            <CustomCursor />
             <Navbar />
             {children}
           </AuthProvider>
