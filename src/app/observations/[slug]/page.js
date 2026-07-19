@@ -29,7 +29,7 @@ export default function StoryPage() {
         .from('posts')
         .select('*')
         .eq('slug', slug)
-        .eq('type', 'story')
+        .eq('type', 'observation')
         .single()
       
       if (data) {
@@ -54,9 +54,9 @@ export default function StoryPage() {
   if (!story) {
     return (
       <main className="min-h-screen bg-[#fcfbf9] pb-32 pt-12 flex flex-col justify-center items-center">
-        <h1 className="text-4xl font-black text-[#111] mb-4">Story Not Found</h1>
-        <Link href="/stories" className="text-indigo-600 font-bold hover:underline">
-          Return to Stories
+        <h1 className="text-4xl font-black text-[#111] mb-4">Observation Not Found</h1>
+        <Link href="/observations" className="text-indigo-600 font-bold hover:underline">
+          Return to Observations
         </Link>
       </main>
     )
@@ -104,7 +104,7 @@ export default function StoryPage() {
           <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
             <div className="flex items-center gap-4 mb-6">
               <div className="w-8 h-1 bg-red-500 rounded-full" />
-              <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Story</h2>
+              <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Observation</h2>
             </div>
             <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -168,7 +168,7 @@ export default function StoryPage() {
         {story.content_behind && (
           <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
             <div className="border-t border-neutral-200 pt-12 mt-16">
-              <h2 className="text-xs font-black tracking-widest text-green-500 uppercase mb-4 text-center">Behind the Story</h2>
+              <h2 className="text-xs font-black tracking-widest text-green-500 uppercase mb-4 text-center">Behind the Observation</h2>
               <div className="text-neutral-500 text-center max-w-lg mx-auto italic text-base">
                 {story.content_behind.split('\n').map((paragraph, i) => (
                   <p key={i} className="mb-4">{paragraph}</p>
@@ -178,6 +178,22 @@ export default function StoryPage() {
           </motion.section>
         )}
 
+        {/* Continue Thinking Rabbit Hole */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
+          <div className="border-t border-neutral-200 pt-12 mt-16">
+            <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase mb-8 text-center">Continue Thinking</h2>
+            <div className="flex flex-col items-center gap-4 text-center max-w-sm mx-auto font-bold text-neutral-400">
+              <span className="text-black hover:text-red-500 cursor-pointer transition">Financial Literacy</span>
+              <span>↓</span>
+              <span className="text-black hover:text-red-500 cursor-pointer transition">Digital Trust</span>
+              <span>↓</span>
+              <span className="text-black hover:text-red-500 cursor-pointer transition">ATM UX</span>
+              <span>↓</span>
+              <span className="text-black hover:text-red-500 cursor-pointer transition">Cybersecurity</span>
+            </div>
+          </div>
+        </motion.section>
+        
         {/* Discussion Section */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
           <DiscussionBoard prompt={story.content_questions && story.content_questions[0] ? story.content_questions[0] : story.discussion_prompt || "What are your thoughts?"} postSlug={story.slug} />

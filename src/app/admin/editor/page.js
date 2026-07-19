@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft, Save, FileText, Image as ImageIcon } from 'lucide-react'
 
 export default function AdminEditor() {
-  const [postType, setPostType] = useState('story') // 'story' or 'idea'
+  const [postType, setPostType] = useState('observation') // 'observation', 'notebook', or 'reading_room'
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
   const [coverImageUrl, setCoverImageUrl] = useState('')
@@ -17,8 +17,8 @@ export default function AdminEditor() {
   const [questions, setQuestions] = useState('')
   const [behindTheStory, setBehindTheStory] = useState('')
 
-  // Idea specific state
-  const [ideaContent, setIdeaContent] = useState('')
+  // Notebook specific state
+  const [notebookContent, setNotebookContent] = useState('')
   const [discussionPrompt, setDiscussionPrompt] = useState('')
 
   const router = require('next/navigation').useRouter()
@@ -39,14 +39,14 @@ export default function AdminEditor() {
       type: postType,
     }
 
-    if (postType === 'story') {
+    if (postType === 'observation') {
       postData.content_story = storyContent
       postData.content_reflection = reflection
       postData.content_picture = biggerPicture
       postData.content_questions = questions ? questions.split('\n').filter(q => q.trim() !== '') : []
       postData.content_behind = behindTheStory
     } else {
-      postData.content = ideaContent
+      postData.content = notebookContent
       postData.discussion_prompt = discussionPrompt
     }
 
@@ -88,16 +88,22 @@ export default function AdminEditor() {
         {/* Post Type Toggle */}
         <div className="flex p-1 bg-neutral-200 rounded-2xl mb-12 w-fit">
           <button 
-            onClick={() => setPostType('story')}
-            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'story' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
+            onClick={() => setPostType('observation')}
+            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'observation' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
           >
-            Write a Story
+            Observation
           </button>
           <button 
-            onClick={() => setPostType('idea')}
-            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'idea' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
+            onClick={() => setPostType('notebook')}
+            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'notebook' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
           >
-            Write an Idea (Essay)
+            Notebook Entry
+          </button>
+          <button 
+            onClick={() => setPostType('reading_room')}
+            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'reading_room' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
+          >
+            Reading Room
           </button>
         </div>
 
@@ -148,11 +154,11 @@ export default function AdminEditor() {
           <div className="h-px bg-neutral-100 my-10" />
 
           {/* Conditional Editor Fields */}
-          {postType === 'story' ? (
+          {postType === 'observation' ? (
             <div className="space-y-12">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-red-500 mb-3 flex items-center gap-2">
-                  <FileText size={16} /> The Story (Narrative)
+                  <FileText size={16} /> The Observation
                 </label>
                 <textarea 
                   rows={6}
@@ -204,7 +210,7 @@ export default function AdminEditor() {
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-green-500 mb-3 flex items-center gap-2">
-                  <FileText size={16} /> Behind the Story
+                  <FileText size={16} /> Behind the Observation
                 </label>
                 <textarea 
                   rows={3}
@@ -219,13 +225,13 @@ export default function AdminEditor() {
             <div className="space-y-12">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest text-indigo-500 mb-3 flex items-center gap-2">
-                  <FileText size={16} /> Essay Content
+                  <FileText size={16} /> Entry Content
                 </label>
                 <textarea 
                   rows={15}
                   placeholder="Write your structural thoughts here..."
-                  value={ideaContent}
-                  onChange={(e) => setIdeaContent(e.target.value)}
+                  value={notebookContent}
+                  onChange={(e) => setNotebookContent(e.target.value)}
                   className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
                 />
               </div>

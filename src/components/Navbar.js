@@ -10,15 +10,17 @@ export default function Navbar() {
     <header className="w-full p-6 flex justify-between items-center z-50">
       <Link href="/">
         <div className="text-2xl font-black tracking-tighter text-[#111] hover:opacity-70 transition">
-          AK<span className="text-red-500">.</span>Blogs
+          Aakash<span className="text-red-500">Khamari</span>
         </div>
       </Link>
       
       {/* Central Navigation */}
-      <nav className="hidden md:flex gap-10 text-sm font-bold uppercase tracking-widest text-[#444] absolute left-1/2 -translate-x-1/2">
-        <Link href="/stories" className="hover:text-black transition">Stories</Link>
-        <Link href="/ideas" className="hover:text-black transition">Ideas</Link>
-        <Link href="/library" className="hover:text-black transition">Library</Link>
+      <nav className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-[#444] absolute left-1/2 -translate-x-1/2">
+        <Link href="/about" className="hover:text-black transition">About</Link>
+        <Link href="/observations" className="hover:text-black transition">Observations</Link>
+        <Link href="/notebook" className="hover:text-black transition">Notebook</Link>
+        <Link href="/reading-room" className="hover:text-black transition">Reading Room</Link>
+        <Link href="/now" className="hover:text-black transition">Now</Link>
       </nav>
 
       {/* Right Side Actions */}

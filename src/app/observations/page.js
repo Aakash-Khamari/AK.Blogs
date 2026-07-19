@@ -15,7 +15,7 @@ export default function StoriesIndex() {
       const { data, error } = await supabase
         .from('posts')
         .select('*')
-        .eq('type', 'story')
+        .eq('type', 'observation')
         .eq('published', true)
         .order('created_at', { ascending: false })
       
@@ -33,10 +33,10 @@ export default function StoriesIndex() {
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto px-6 mb-16">
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[1.1] text-[#111] mb-6">
-          Stories from <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">Everyday Life.</span>
+          An Archive of <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">Observations.</span>
         </h1>
         <p className="text-xl text-neutral-500 font-medium max-w-2xl">
-          Observations turned into narratives. This is where simple moments become deeper explorations of human behavior, technology, and society.
+          Real moments turned into deeper explorations of human behavior, technology, and society.
         </p>
       </div>
 
@@ -48,7 +48,7 @@ export default function StoriesIndex() {
           </div>
         ) : stories.length === 0 ? (
           <div className="text-center py-20 text-neutral-500 font-medium bg-white rounded-3xl border border-neutral-100 shadow-sm">
-            No stories published yet.
+            No observations recorded yet.
           </div>
         ) : (
           stories.map((story, index) => (
@@ -58,7 +58,7 @@ export default function StoriesIndex() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link href={`/stories/${story.slug}`}>
+              <Link href={`/observations/${story.slug}`}>
                 <div className="bg-white p-8 md:p-10 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] border border-neutral-100 group hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer relative overflow-hidden">
                   
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">

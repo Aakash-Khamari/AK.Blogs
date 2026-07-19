@@ -6,12 +6,12 @@ import Link from 'next/link'
 import { Search, Loader2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
-export default function LibraryIndex() {
+export default function ReadingRoomIndex() {
   const [libraryData, setLibraryData] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState('All')
-  const [categories, setCategories] = useState(['All', 'story', 'idea'])
+  const [categories, setCategories] = useState(['All', 'observation', 'notebook', 'reading_room'])
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -25,7 +25,7 @@ export default function LibraryIndex() {
         setLibraryData(data)
         // Extract unique categories
         const uniqueCategories = [...new Set(data.map(item => item.category))]
-        setCategories(['All', 'story', 'idea', ...uniqueCategories.filter(Boolean)])
+        setCategories(['All', 'observation', 'notebook', 'reading_room', ...uniqueCategories.filter(Boolean)])
       }
       setLoading(false)
     }
@@ -39,7 +39,7 @@ export default function LibraryIndex() {
     
     let matchesFilter = true
     if (activeFilter !== 'All') {
-      if (activeFilter === 'story' || activeFilter === 'idea') {
+      if (activeFilter === 'observation' || activeFilter === 'notebook' || activeFilter === 'reading_room') {
         matchesFilter = item.type === activeFilter
       } else {
         matchesFilter = item.category === activeFilter
@@ -54,10 +54,10 @@ export default function LibraryIndex() {
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto px-6 mb-12">
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[1.1] text-[#111] mb-6">
-          The <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">Library.</span>
+          The <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">Reading Room.</span>
         </h1>
         <p className="text-xl text-neutral-500 font-medium max-w-2xl mb-12">
-          Every piece ever published. Filter by topic, idea, or story.
+          Books, articles, papers, and videos that influenced the thinking.
         </p>
 
         {/* Search Bar */}
@@ -103,11 +103,11 @@ export default function LibraryIndex() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <Link href={item.type === 'story' ? `/stories/${item.slug}` : `/ideas/${item.slug}`}>
+                <Link href={item.type === 'observation' ? `/observations/${item.slug}` : (item.type === 'notebook' ? `/notebook/${item.slug}` : `/reading-room/${item.slug}`)}>
                   <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-neutral-100 hover:bg-neutral-50 transition-colors group">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <span className={`text-xs font-black uppercase tracking-widest ${item.type === 'story' ? 'text-red-500' : 'text-indigo-500'}`}>
+                        <span className={`text-xs font-black uppercase tracking-widest ${item.type === 'observation' ? 'text-red-500' : 'text-indigo-500'}`}>
                           {item.type}
                         </span>
                         <span className="text-neutral-300">•</span>
