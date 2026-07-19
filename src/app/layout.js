@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${lora.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-[#fcfbf9] text-[#171717] selection:bg-black/10 font-sans film-grain">
+      <body className="min-h-full flex flex-col bg-white text-[#111] dark:bg-[#0a0a0a] dark:text-[#e5e5e5] selection:bg-black/10 font-sans film-grain transition-colors duration-500">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             <Navbar />
