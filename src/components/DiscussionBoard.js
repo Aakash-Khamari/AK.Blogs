@@ -55,19 +55,19 @@ export default function DiscussionBoard({ prompt, postSlug }) {
   }
 
   return (
-    <div className="mt-20 p-10 bg-indigo-50 dark:bg-[#111] border border-indigo-100 dark:border-neutral-800 rounded-[2rem]">
+    <div className="mt-12 md:mt-20 p-6 md:p-10 bg-indigo-50 dark:bg-[#111] border border-indigo-100 dark:border-neutral-800 rounded-[2rem]">
       <div className="flex items-center gap-3 mb-4">
         <MessageSquare size={18} className="text-indigo-500" />
         <h2 className="text-sm font-black tracking-widest text-indigo-500 uppercase">The Discussion</h2>
       </div>
       
-      <p className="text-2xl font-black text-[#111] dark:text-white mb-8 leading-tight">
+      <p className="text-xl md:text-2xl font-black text-[#111] dark:text-white mb-6 md:mb-8 leading-tight">
         {prompt}
       </p>
       
       {/* Input Area */}
       {user ? (
-        <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0a0a0a] p-6 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 mb-12">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0a0a0a] p-5 md:p-6 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 mb-8 md:mb-12">
           <div className="flex gap-4 mb-4">
             <button 
               type="button"
@@ -103,7 +103,7 @@ export default function DiscussionBoard({ prompt, postSlug }) {
           </div>
         </form>
       ) : (
-        <div className="bg-white dark:bg-[#0a0a0a] p-8 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 mb-12 text-center">
+        <div className="bg-white dark:bg-[#0a0a0a] p-6 md:p-8 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 mb-8 md:mb-12 text-center">
           <p className="text-neutral-500 font-medium mb-4">You must be an Observer to join the discussion.</p>
           <Link href="/login">
             <button className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-widest rounded-xl hover:scale-105 transition">

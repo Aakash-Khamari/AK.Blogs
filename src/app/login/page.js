@@ -71,7 +71,7 @@ export default function Login() {
 
   return (
     <main className="min-h-screen bg-[#fcfbf9] dark:bg-[#0a0a0a] flex flex-col justify-center items-center px-6 pt-20">
-      <div className="w-full max-w-md bg-white p-10 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] border border-neutral-100 text-center">
+      <div className="w-full max-w-md bg-white dark:bg-[#111] p-6 sm:p-10 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] border border-neutral-100 dark:border-neutral-800 text-center">
         <div className="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-xl font-black">
           AK
         </div>

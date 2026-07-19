@@ -109,7 +109,7 @@ export default function NotebookPage() {
       />
       <main className="min-h-screen pb-32">
         {/* Hero Section */}
-      <div className="max-w-5xl mx-auto px-6 pt-12 pb-16">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 pt-12 pb-16">
         <motion.div 
           initial="hidden"
           animate="visible"
@@ -133,7 +133,7 @@ export default function NotebookPage() {
             </div>
             <SaveButton postSlug={entry.slug} />
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-[1.15] mb-6 text-[#111] dark:text-white">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.15] mb-6 text-[#111] dark:text-white">
             {entry.title}
           </h1>
           
@@ -164,7 +164,7 @@ export default function NotebookPage() {
       </div>
 
       {/* Content Section */}
-      <div className="max-w-5xl mx-auto px-6 space-y-12 text-[1.2rem] text-[#333] dark:text-neutral-300 leading-[1.9] font-medium">
+      <div className="max-w-5xl mx-auto px-4 md:px-6 space-y-12 text-[1.1rem] md:text-[1.2rem] text-[#333] dark:text-neutral-300 leading-[1.9] font-medium">
         
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}>
           <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif whitespace-pre-wrap">

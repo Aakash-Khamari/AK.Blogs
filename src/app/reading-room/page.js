@@ -64,7 +64,7 @@ export default function ReadingRoomIndex() {
 
         <div className="relative">
           {/* Vertical connecting line */}
-          <div className="absolute left-8 top-10 bottom-10 w-1 bg-neutral-100 dark:bg-neutral-900 rounded-full" />
+          <div className="absolute left-4 md:left-8 top-10 bottom-10 w-1 bg-neutral-100 dark:bg-neutral-900 rounded-full" />
           
           <div className="space-y-16">
             {loading ? (
@@ -97,13 +97,13 @@ export default function ReadingRoomIndex() {
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
-                    className="relative pl-24"
+                    className="relative pl-12 md:pl-24"
                   >
-                    <div className={`absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 bg-gradient-to-br ${color} rounded-full z-10 shadow-lg ring-4 ring-white dark:ring-[#0a0a0a]`} />
-                    <div className="absolute left-8 top-1/2 -translate-y-1/2 w-16 h-1 bg-neutral-100 dark:bg-neutral-900" />
+                    <div className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 w-5 h-5 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full z-10 shadow-lg ring-4 ring-white dark:ring-[#0a0a0a]" />
+                    <div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-8 md:w-16 h-1 bg-neutral-100 dark:bg-neutral-900" />
 
                     <CardWrapper>
-                      <div className="bg-white dark:bg-[#111] p-10 rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.03)] border border-neutral-100 dark:border-neutral-800 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.05)] transition-all duration-300 relative overflow-hidden">
+                      <div className="bg-white dark:bg-[#111] p-6 md:p-10 rounded-3xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] dark:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.03)] border border-neutral-100 dark:border-neutral-800 hover:-translate-y-2 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.05)] transition-all duration-300 relative overflow-hidden flex flex-col md:flex-row gap-8">
                         
                         <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
 
