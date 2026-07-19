@@ -159,7 +159,7 @@ export default function StoryPage() {
       </div>
 
       {/* Content Sections */}
-      <div className="max-w-5xl mx-auto px-6 space-y-12 text-[1.15rem] text-[#333] leading-[1.8] font-medium">
+      <div className="max-w-5xl mx-auto px-6 space-y-12 text-[1.15rem] text-[#333] dark:text-neutral-300 leading-[1.8] font-medium">
         
         {/* The Story */}
         {(story.content_story || story.content) && (
@@ -168,7 +168,7 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-red-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Observation</h2>
             </div>
-            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif">
+            <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {story.content_story || story.content}
               </ReactMarkdown>
@@ -183,7 +183,7 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-blue-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">My Reflection</h2>
             </div>
-            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 font-serif">
+            <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 font-serif">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {story.content_reflection}
               </ReactMarkdown>
@@ -199,7 +199,7 @@ export default function StoryPage() {
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Bigger Picture</h2>
             </div>
             <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800">
-              <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] font-serif">
+              <div className="prose prose-lg prose-neutral dark:prose-invert max-w-none prose-headings:font-black prose-p:leading-[1.8] font-serif">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {story.content_picture}
                 </ReactMarkdown>
