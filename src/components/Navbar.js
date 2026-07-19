@@ -9,7 +9,9 @@ export default function Navbar() {
   return (
     <header className="w-full p-6 flex justify-between items-center z-50">
       <Link href="/">
-        <img src="/logo.jpg" alt="Aakash Khamari Logo" className="h-12 w-auto hover:opacity-70 transition mix-blend-multiply" />
+        <div className="text-2xl font-black tracking-tighter text-[#111] hover:opacity-70 transition">
+          Aakash<span className="text-red-500">Khamari</span>
+        </div>
       </Link>
       
       {/* Central Navigation */}
