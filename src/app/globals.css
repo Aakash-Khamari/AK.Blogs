@@ -3,8 +3,8 @@
 
 
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: var(--font-lora), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 /* Custom Scrollbar */
@@ -32,10 +32,56 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: #fcfbf9; /* Clean, warm off-white/beige */
-  color: #171717; /* Deep neutral black */
+  background-color: var(--bg-primary, #fcfbf9);
+  color: var(--text-primary, #171717);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Dark Mode Overrides (Using class strategy with next-themes) */
+.dark {
+  --bg-primary: #0a0a0a;
+  --text-primary: #e5e5e5;
+  --bg-secondary: #171717;
+  --border-color: #262626;
+}
+
+.dark body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #f5f5f5;
+}
+
+.dark p {
+  color: #a3a3a3;
+}
+
+.dark .bg-white {
+  background-color: var(--bg-secondary) !important;
+}
+
+.dark .border-neutral-100, .dark .border-neutral-200 {
+  border-color: var(--border-color) !important;
+}
+
+.dark .text-\[\#111\] {
+  color: #f5f5f5 !important;
+}
+
+.dark .text-neutral-500 {
+  color: #a3a3a3 !important;
+}
+
+.dark .text-neutral-600 {
+  color: #d4d4d4 !important;
+}
+
+.dark .bg-neutral-50, .dark .bg-\[\#fcfbf9\] {
+  background-color: var(--bg-primary) !important;
 }
 
 /* Base typography enhancements for editorial look */
@@ -55,4 +101,34 @@ p {
   border: 1px solid #e5e5e5;
   box-shadow: 0 4px 20px -4px rgba(0,0,0,0.05);
   border-radius: 8px;
+}
+.dark .node-card {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 20px -4px rgba(0,0,0,0.5);
+}
+
+/* Drop Cap Styling for Editorials */
+.drop-cap p:first-of-type::first-letter {
+  float: left;
+  font-size: 4.5rem;
+  line-height: 0.8;
+  padding-top: 0.15rem;
+  padding-right: 0.5rem;
+  font-family: var(--font-serif);
+  font-weight: 900;
+  color: #ef4444; /* red-500 */
+}
+
+/* Subtle Film Grain Noise */
+.film-grain {
+  position: relative;
+}
+.film-grain::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
 }

@@ -4,11 +4,13 @@ import remarkGfm from 'remark-gfm'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useParams } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import DiscussionBoard from '@/components/DiscussionBoard'
 import SaveButton from '@/components/SaveButton'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -19,6 +21,14 @@ export default function NotebookPage() {
   const { slug } = useParams()
   const [entry, setEntry] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  // Reading progress
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   useEffect(() => {
     const fetchEntry = async () => {
@@ -62,8 +72,13 @@ export default function NotebookPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fcfbf9] pb-32">
-      {/* Hero Section */}
+    <>
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-red-500 origin-left z-[100]"
+        style={{ scaleX }}
+      />
+      <main className="min-h-screen pb-32">
+        {/* Hero Section */}
       <div className="max-w-5xl mx-auto px-6 pt-12 pb-16">
         <motion.div 
           initial="hidden"
@@ -89,9 +104,11 @@ export default function NotebookPage() {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="w-full aspect-[21/9] rounded-[2rem] overflow-hidden shadow-sm border border-neutral-200"
+            className="w-full aspect-[21/9] rounded-[2rem] overflow-hidden shadow-sm border border-neutral-200 bg-neutral-100"
           >
-            <img src={entry.cover_image_url} alt="Cover" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('hidden') }} />
+            <Zoom>
+              <img src={entry.cover_image_url} alt="Cover" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('hidden') }} />
+            </Zoom>
           </motion.div>
         )}
       </div>
@@ -100,7 +117,7 @@ export default function NotebookPage() {
       <div className="max-w-5xl mx-auto px-6 space-y-12 text-[1.2rem] text-[#333] leading-[1.9] font-medium">
         
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}>
-          <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6">
+          <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {entry.content || ""}
             </ReactMarkdown>
@@ -114,6 +131,7 @@ export default function NotebookPage() {
 
       </div>
     </main>
+    </>
   )
 }
 

@@ -26,7 +26,21 @@ export default function HomeClient({ posts }) {
   }
 
   return (
-    <main className="min-h-screen bg-[#fcfbf9] relative overflow-hidden">
+    <main className="min-h-screen relative overflow-hidden">
+      {/* Animated Mesh Gradient Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-20 mix-blend-multiply dark:mix-blend-screen">
+        <motion.div
+          animate={{ x: [0, 100, 0], y: [0, -50, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-200 dark:bg-purple-900 rounded-full blur-[120px]"
+        />
+        <motion.div
+          animate={{ x: [0, -100, 0], y: [0, 100, 0], scale: [1, 1.2, 1] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-orange-100 dark:bg-orange-900/40 rounded-full blur-[150px]"
+        />
+      </div>
+
       {/* Hero Section */}
       <div className="relative z-10 h-screen flex flex-col items-center justify-center pointer-events-none px-6 pb-20">
         <motion.div 
@@ -40,7 +54,7 @@ export default function HomeClient({ posts }) {
             I am Aakash Khamari
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-[#111] mb-8 leading-[0.95] drop-shadow-sm mix-blend-overlay">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-[#111] dark:text-white mb-8 leading-[0.95] drop-shadow-sm mix-blend-overlay">
             SOME STORIES DESERVE MORE THAN <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-purple-600">3,000 CHARACTERS.</span>
           </h1>
           <p className="text-xl md:text-2xl text-neutral-600 font-medium max-w-2xl mx-auto bg-white/30 backdrop-blur-sm p-4 rounded-2xl">
@@ -56,7 +70,7 @@ export default function HomeClient({ posts }) {
           {/* Left Side: Sticky Text */}
           <div className="lg:w-1/3 relative">
             <div className="sticky top-32">
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8 text-[#111] leading-[1.1]">
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-8 text-[#111] dark:text-white leading-[1.1]">
                 An archive of observations.
               </h2>
               <p className="text-neutral-500 text-lg leading-relaxed mb-8 font-medium">

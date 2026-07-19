@@ -5,11 +5,13 @@ import remarkGfm from 'remark-gfm'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useParams } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import DiscussionBoard from '@/components/DiscussionBoard'
 import SaveButton from '@/components/SaveButton'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -20,6 +22,14 @@ export default function StoryPage() {
   const { slug } = useParams()
   const [story, setStory] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  // Reading progress
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -63,7 +73,13 @@ export default function StoryPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fcfbf9] pb-32">
+    <>
+      {/* Reading Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-red-500 origin-left z-[100]"
+        style={{ scaleX }}
+      />
+      <main className="min-h-screen pb-32">
       <div className="max-w-5xl mx-auto px-6 pt-12 pb-10">
         <motion.div 
           initial="hidden"
@@ -91,7 +107,9 @@ export default function StoryPage() {
             transition={{ duration: 1, delay: 0.2 }}
             className="w-full aspect-[21/9] md:aspect-[2/1] rounded-[2rem] overflow-hidden shadow-sm border border-neutral-200 bg-neutral-100"
           >
-            <img src={story.cover_image_url} alt="Cover" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('hidden') }} />
+            <Zoom>
+              <img src={story.cover_image_url} alt="Cover" className="w-full h-full object-cover" onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.classList.add('hidden') }} />
+            </Zoom>
           </motion.div>
         )}
       </div>
@@ -106,7 +124,7 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-red-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Observation</h2>
             </div>
-            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6">
+            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {story.content_story || story.content}
               </ReactMarkdown>
@@ -121,7 +139,7 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-blue-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">My Reflection</h2>
             </div>
-            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6">
+            <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 font-serif">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {story.content_reflection}
               </ReactMarkdown>
@@ -136,8 +154,8 @@ export default function StoryPage() {
               <div className="w-8 h-1 bg-orange-500 rounded-full" />
               <h2 className="text-xs font-black tracking-widest text-neutral-400 uppercase">The Bigger Picture</h2>
             </div>
-            <div className="p-8 bg-neutral-100 rounded-3xl border border-neutral-200">
-              <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8]">
+            <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800">
+              <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] font-serif">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {story.content_picture}
                 </ReactMarkdown>
@@ -155,9 +173,9 @@ export default function StoryPage() {
             </div>
             <ul className="space-y-4 list-none p-0">
               {story.content_questions.map((q, i) => (
-                <li key={i} className="flex gap-4 items-start bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm">
+                <li key={i} className="flex gap-4 items-start bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
                   <span className="text-purple-500 font-black text-xl leading-none mt-1">Q.</span>
-                  <span className="text-[#111] font-bold">{q}</span>
+                  <span className="text-[#111] dark:text-white font-bold">{q}</span>
                 </li>
               ))}
             </ul>
@@ -167,9 +185,9 @@ export default function StoryPage() {
         {/* Behind the Story */}
         {story.content_behind && (
           <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
-            <div className="border-t border-neutral-200 pt-12 mt-16">
+            <div className="border-t border-neutral-200 dark:border-neutral-800 pt-12 mt-16">
               <h2 className="text-xs font-black tracking-widest text-green-500 uppercase mb-4 text-center">Behind the Observation</h2>
-              <div className="text-neutral-500 text-center max-w-lg mx-auto italic text-base">
+              <div className="text-neutral-500 text-center max-w-lg mx-auto italic text-base font-serif">
                 {story.content_behind.split('\n').map((paragraph, i) => (
                   <p key={i} className="mb-4">{paragraph}</p>
                 ))}
@@ -201,5 +219,6 @@ export default function StoryPage() {
 
       </div>
     </main>
+    </>
   )
 }
