@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
-import { Loader2, ArrowLeft, ArrowRight, Twitter, Linkedin, Link2 } from 'lucide-react'
+import { Loader2, ArrowLeft, ArrowRight, Link2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useParams } from 'next/navigation'
 
