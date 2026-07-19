@@ -23,11 +23,11 @@ export default function Navbar() {
         
         {/* Central Navigation (Desktop) */}
         <nav className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest text-[#444] dark:text-neutral-400 absolute left-1/2 -translate-x-1/2">
-          <Link href="/about" className="hover:text-black dark:hover:text-white transition">About</Link>
-          <Link href="/observations" className="hover:text-black dark:hover:text-white transition">Observations</Link>
-          <Link href="/notebook" className="hover:text-black dark:hover:text-white transition">Notebook</Link>
+          <Link href="/writing" className="hover:text-black dark:hover:text-white transition">Writing</Link>
+          <Link href="/projects" className="hover:text-black dark:hover:text-white transition">Projects</Link>
           <Link href="/reading-room" className="hover:text-black dark:hover:text-white transition">Reading Room</Link>
           <Link href="/now" className="hover:text-black dark:hover:text-white transition">Now</Link>
+          <Link href="/about" className="hover:text-black dark:hover:text-white transition">About</Link>
         </nav>
 
         {/* Right Side Actions (Desktop & Mobile) */}
@@ -85,11 +85,11 @@ export default function Navbar() {
             className="fixed inset-0 bg-[#fcfbf9] dark:bg-[#0a0a0a] z-[55] flex flex-col items-center justify-center gap-8"
           >
             <nav className="flex flex-col items-center gap-8 text-xl font-black uppercase tracking-widest text-black dark:text-white">
-              <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
-              <Link href="/observations" onClick={() => setIsMobileMenuOpen(false)}>Observations</Link>
-              <Link href="/notebook" onClick={() => setIsMobileMenuOpen(false)}>Notebook</Link>
+              <Link href="/writing" onClick={() => setIsMobileMenuOpen(false)}>Writing</Link>
+              <Link href="/projects" onClick={() => setIsMobileMenuOpen(false)}>Projects</Link>
               <Link href="/reading-room" onClick={() => setIsMobileMenuOpen(false)}>Reading Room</Link>
               <Link href="/now" onClick={() => setIsMobileMenuOpen(false)}>Now</Link>
+              <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link>
               
               <div className="w-12 h-px bg-neutral-200 dark:bg-neutral-800 my-4" />
               
