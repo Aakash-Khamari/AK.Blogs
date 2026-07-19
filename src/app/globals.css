@@ -7,6 +7,8 @@
   --font-serif: var(--font-lora), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -52,47 +54,13 @@ body {
   color: var(--text-primary);
 }
 
-.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-  color: #f5f5f5;
-}
-
-.dark p {
-  color: #a3a3a3;
-}
-
-.dark .bg-white {
-  background-color: var(--bg-secondary) !important;
-}
-
-.dark .border-neutral-100, .dark .border-neutral-200 {
-  border-color: var(--border-color) !important;
-}
-
-.dark .text-\[\#111\] {
-  color: #f5f5f5 !important;
-}
-
-.dark .text-neutral-500 {
-  color: #a3a3a3 !important;
-}
-
-.dark .text-neutral-600 {
-  color: #d4d4d4 !important;
-}
-
-.dark .bg-neutral-50, .dark .bg-\[\#fcfbf9\] {
-  background-color: var(--bg-primary) !important;
-}
-
 /* Base typography enhancements for editorial look */
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.03em;
-  color: #0a0a0a;
 }
 
 p {
   line-height: 1.8;
-  color: #404040;
 }
 
 /* Diagram Node specific utility if needed */
