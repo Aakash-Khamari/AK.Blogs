@@ -73,8 +73,12 @@ export default function NotebookPage() {
           .limit(3)
         setContinueReading(nextPosts || [])
 
-        // Increment views
-        await supabase.rpc('increment_post_views', { post_id: data.id })
+        // Increment views via API route
+        fetch('/api/views', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ post_id: data.id })
+        }).catch(console.error)
       }
       setLoading(false)
     }
