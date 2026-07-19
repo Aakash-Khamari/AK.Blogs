@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { LayoutDashboard, PenSquare, LogOut } from 'lucide-react'
+import { LayoutDashboard, PenSquare, LogOut, Hash, Calendar, BookOpen, Briefcase } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter, usePathname } from 'next/navigation'
@@ -47,39 +47,43 @@ export default function AdminLayout({ children }) {
   const isActive = (path) => pathname === path
 
   return (
-    <div className="min-h-screen flex bg-neutral-50">
+    <div className="min-h-screen flex bg-neutral-50 dark:bg-[#0a0a0a] transition-colors duration-500">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-neutral-200 bg-white flex flex-col hidden md:flex">
+      <aside className="w-64 border-r border-neutral-200 dark:border-neutral-900 bg-white dark:bg-[#111] flex flex-col hidden md:flex">
         <div className="p-6">
-          <h2 className="text-xl font-bold text-[#111] tracking-tight">Admin<span className="text-red-500">.</span></h2>
+          <h2 className="text-xl font-bold text-[#111] dark:text-white tracking-tight">Admin<span className="text-red-500">.</span></h2>
         </div>
         
         <nav className="flex-1 px-4 flex flex-col gap-2 mt-4">
-          <Link href="/admin" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin') ? 'bg-neutral-100 text-[#111] font-bold' : 'text-neutral-500 hover:text-[#111] hover:bg-neutral-50 font-medium'}`}>
+          <Link href="/admin" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
             <LayoutDashboard size={18} />
             Dashboard
           </Link>
-          <Link href="/admin/editor" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${pathname?.startsWith('/admin/editor') ? 'bg-neutral-100 text-[#111] font-bold' : 'text-neutral-500 hover:text-[#111] hover:bg-neutral-50 font-medium'}`}>
+          <Link href="/admin/editor" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${pathname?.startsWith('/admin/editor') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
             <PenSquare size={18} />
             Write Story
           </Link>
-          <Link href="/admin/analytics" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/analytics') ? 'bg-neutral-100 text-[#111] font-bold' : 'text-neutral-500 hover:text-[#111] hover:bg-neutral-50 font-medium'}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
-            Analytics
+          <Link href="/admin/themes" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/themes') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
+            <Hash size={18} />
+            Themes
           </Link>
-          <Link href="/admin/users" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/users') ? 'bg-neutral-100 text-[#111] font-bold' : 'text-neutral-500 hover:text-[#111] hover:bg-neutral-50 font-medium'}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Users
+          <Link href="/admin/daily" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/daily') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
+            <Calendar size={18} />
+            Daily Notices
           </Link>
-          <Link href="/admin/comments" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/comments') ? 'bg-neutral-100 text-[#111] font-bold' : 'text-neutral-500 hover:text-[#111] hover:bg-neutral-50 font-medium'}`}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Moderation
+          <Link href="/admin/reading-room" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/reading-room') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
+            <BookOpen size={18} />
+            Reading Room
+          </Link>
+          <Link href="/admin/projects" className={`flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-colors ${isActive('/admin/projects') ? 'bg-neutral-100 dark:bg-neutral-800 text-[#111] dark:text-white font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-[#111] dark:hover:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 font-medium'}`}>
+            <Briefcase size={18} />
+            Projects
           </Link>
         </nav>
 
-        <div className="p-4 border-t border-neutral-200">
+        <div className="p-4 border-t border-neutral-200 dark:border-neutral-900">
           <form action="/auth/signout" method="post">
-            <button className="flex w-full items-center gap-3 px-3 py-2 text-sm text-neutral-500 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors font-medium">
+            <button className="flex w-full items-center gap-3 px-3 py-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-neutral-900 rounded-md transition-colors font-medium">
               <LogOut size={18} />
               Sign Out
             </button>

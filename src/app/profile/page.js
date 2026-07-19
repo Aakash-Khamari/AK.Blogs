@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { LogOut, Bookmark, User as UserIcon } from 'lucide-react'
+import { LogOut, ArrowRight, Bookmark, Flame, History } from 'lucide-react'
 
 export default function ProfilePage() {
   const router = useRouter()
@@ -31,7 +31,7 @@ export default function ProfilePage() {
       setProfile({ 
         ...user, 
         ...profileData,
-        email: user.email // Explicitly ensure email is extracted from auth.user
+        email: user.email
       })
 
       // Fetch collections
@@ -55,97 +55,93 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#fcfbf9] flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-[#0a0a0a] flex items-center justify-center">
         <div className="animate-pulse flex gap-2">
-          <div className="w-3 h-3 bg-neutral-300 rounded-full"></div>
-          <div className="w-3 h-3 bg-neutral-300 rounded-full"></div>
-          <div className="w-3 h-3 bg-neutral-300 rounded-full"></div>
+          <div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full"></div>
+          <div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full"></div>
+          <div className="w-2 h-2 bg-neutral-300 dark:bg-neutral-700 rounded-full"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <main className="min-h-screen bg-[#fcfbf9] pb-32 pt-12">
-      <div className="max-w-4xl mx-auto px-6">
+    <main className="min-h-screen bg-white dark:bg-[#0a0a0a] pb-32 pt-24 transition-colors duration-500">
+      <div className="max-w-3xl mx-auto px-6">
         
         {/* Header */}
-        <div className="flex items-center justify-between mb-16">
-          <h1 className="text-4xl font-black tracking-tighter text-[#111]">
-            Your <span className="text-indigo-600">Profile</span>
-          </h1>
+        <div className="flex items-center justify-between mb-16 border-b border-neutral-100 dark:border-neutral-900 pb-8">
+          <div>
+            <h1 className="text-3xl font-serif tracking-tight text-[#111] dark:text-white mb-2">
+              {profile?.display_name || 'Observer'}
+            </h1>
+            <p className="text-sm text-neutral-500 font-sans">{profile?.email}</p>
+          </div>
           <button 
             onClick={handleSignOut}
-            className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-neutral-500 hover:text-red-600 transition"
+            className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-red-500 transition-colors"
           >
-            <LogOut size={16} />
+            <LogOut size={14} />
             Sign Out
           </button>
         </div>
 
-        {/* Profile Details */}
-        <div className="bg-white p-8 rounded-3xl border border-neutral-100 shadow-sm mb-12 flex items-center gap-6">
-          <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center text-neutral-400">
-            <UserIcon size={32} />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-[#111] mb-1">
-              {profile?.display_name || 'Observer'}
-            </h2>
-            <p className="text-neutral-500 font-medium">{profile?.email}</p>
-            <div className="mt-3 inline-block px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold uppercase tracking-widest rounded-full">
-              {profile?.role === 'admin' ? 'Director' : 'Observer'}
-            </div>
-          </div>
-        </div>
-
-        {/* Collections */}
-        <div>
-          <h3 className="text-xl font-bold text-[#111] mb-6 flex items-center gap-2">
-            <Bookmark size={20} className="text-indigo-600" />
-            Saved Collections
-          </h3>
+        <div className="grid md:grid-cols-3 gap-12">
           
-          {collections.length === 0 ? (
-            <div className="bg-white p-12 rounded-3xl border border-neutral-100 shadow-sm text-center">
-              <p className="text-neutral-500 font-medium">You haven't saved any stories or ideas yet.</p>
-              <Link href="/library" className="text-indigo-600 font-bold mt-2 inline-block hover:underline">
-                Explore the Library
-              </Link>
-            </div>
-          ) : (
-            <div className="grid gap-4">
-              {collections.map((item) => (
-                <Link key={item.id} href={`/stories/${item.post_slug}`}>
-                  <motion.div 
-                    whileHover={{ y: -2 }}
-                    className="bg-white p-6 rounded-2xl border border-neutral-100 shadow-sm flex justify-between items-center group"
-                  >
-                    <div>
-                      <h4 className="font-bold text-[#111] group-hover:text-indigo-600 transition">
-                        {/* We would ideally fetch the actual title by joining a posts table, but since we rely on static data right now, we just show the slug styled nicely */}
+          {/* Main Content: Saved & History */}
+          <div className="md:col-span-2 space-y-16">
+            
+            <section>
+              <div className="flex items-center gap-3 mb-6 text-xs font-bold uppercase tracking-widest text-neutral-400">
+                <Bookmark size={14} /> Saved
+              </div>
+              
+              {collections.length === 0 ? (
+                <div className="py-8 text-neutral-500 font-medium text-sm">
+                  You haven't saved any stories or ideas yet.
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {collections.map((item) => (
+                    <Link key={item.id} href={`/observations/${item.post_slug}`} className="group block">
+                      <h4 className="text-lg font-serif text-[#111] dark:text-white group-hover:text-red-500 transition-colors">
                         {item.post_slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                       </h4>
-                      <p className="text-sm text-neutral-400 mt-1">Saved on {new Date(item.created_at).toLocaleDateString()}</p>
-                    </div>
-                    <ArrowRightIcon className="text-neutral-300 group-hover:text-indigo-600 transition transform group-hover:translate-x-1" />
-                  </motion.div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
+                      <p className="text-xs text-neutral-400 mt-1 uppercase tracking-widest font-bold">
+                        Saved on {new Date(item.created_at).toLocaleDateString()}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </section>
 
+            <div className="w-full h-px bg-neutral-100 dark:bg-neutral-900"></div>
+
+            <section>
+              <div className="flex items-center gap-3 mb-6 text-xs font-bold uppercase tracking-widest text-neutral-400">
+                <History size={14} /> Reading History
+              </div>
+              <div className="py-8 text-neutral-500 font-medium text-sm">
+                Reading history tracking is currently paused.
+              </div>
+            </section>
+
+          </div>
+
+          {/* Sidebar: Streak */}
+          <div className="md:col-span-1">
+            <div className="p-6 border border-neutral-100 dark:border-neutral-900 flex flex-col items-center justify-center text-center gap-3">
+              <Flame size={32} className="text-orange-500" />
+              <div>
+                <h3 className="text-3xl font-serif text-[#111] dark:text-white">3</h3>
+                <p className="text-xs font-bold uppercase tracking-widest text-neutral-400 mt-1">Day Streak</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </main>
-  )
-}
-
-function ArrowRightIcon(props) {
-  return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
   )
 }
