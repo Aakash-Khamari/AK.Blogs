@@ -166,7 +166,7 @@ export default function NotebookPage() {
       <div className="max-w-5xl mx-auto px-6 space-y-12 text-[1.2rem] text-[#333] leading-[1.9] font-medium">
         
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}>
-          <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif">
+          <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-black prose-p:leading-[1.8] prose-p:mb-6 drop-cap font-serif whitespace-pre-wrap">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {entry.content || ""}
             </ReactMarkdown>
