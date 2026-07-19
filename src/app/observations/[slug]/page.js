@@ -34,6 +34,7 @@ export default function StoryPage() {
   })
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
     const fetchStory = async () => {
       if (!slug) return
       

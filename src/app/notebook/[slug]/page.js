@@ -33,6 +33,7 @@ export default function NotebookPage() {
   })
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' })
     const fetchEntry = async () => {
       if (!slug) return
       

@@ -57,7 +57,7 @@ export default function HomeClient({ posts }) {
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-[#111] dark:text-white mb-8 leading-[0.95] drop-shadow-sm mix-blend-overlay">
             SOME STORIES DESERVE MORE THAN <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-purple-600">3,000 CHARACTERS.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-neutral-600 font-medium max-w-2xl mx-auto bg-white/30 backdrop-blur-sm p-4 rounded-2xl">
+          <p className="text-xl md:text-2xl text-neutral-600 dark:text-neutral-300 font-medium max-w-2xl mx-auto bg-white/30 dark:bg-black/20 backdrop-blur-md p-4 rounded-2xl border border-white/40 dark:border-white/10">
             Some ideas deserve more than a news feed. This is my lifelong archive of stories and ideas.
           </p>
         </motion.div>
@@ -76,7 +76,7 @@ export default function HomeClient({ posts }) {
               <p className="text-neutral-500 text-lg leading-relaxed mb-8 font-medium">
                 LinkedIn is where conversations begin. My website is where they continue. Every observation starts with a real moment, then asks a bigger question.
               </p>
-              <div className="text-sm font-bold text-black uppercase tracking-widest border-b-2 border-black inline-block pb-1">
+              <div className="text-sm font-bold text-black dark:text-white uppercase tracking-widest border-b-2 border-black dark:border-white inline-block pb-1">
                 Explore the Archive
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function HomeClient({ posts }) {
                               <div className={`p-2.5 bg-gradient-to-br ${color} rounded-xl shadow-md`}>
                                 {icon}
                               </div>
-                              <span className="text-xs font-black text-black uppercase tracking-widest">{story.category || 'Observation'}</span>
+                              <span className="text-xs font-black text-black dark:text-white uppercase tracking-widest">{story.category || 'Observation'}</span>
                             </div>
                             <span className="text-sm text-neutral-400 font-bold">
                               {new Date(story.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -125,7 +125,7 @@ export default function HomeClient({ posts }) {
                             {story.title}
                           </h3>
                           
-                          <div className="mt-8 flex items-center text-sm font-black text-neutral-400 group-hover:text-black transition-colors relative z-10 uppercase tracking-widest">
+                          <div className="mt-8 flex items-center text-sm font-black text-neutral-400 dark:text-neutral-300 group-hover:text-black dark:group-hover:text-white transition-colors relative z-10 uppercase tracking-widest">
                             Open Entry
                             <ArrowRight size={18} className="ml-3 transform group-hover:translate-x-2 transition-transform" />
                           </div>
