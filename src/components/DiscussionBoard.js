@@ -55,31 +55,31 @@ export default function DiscussionBoard({ prompt, postSlug }) {
   }
 
   return (
-    <div className="mt-20 p-10 bg-indigo-50 border border-indigo-100 rounded-[2rem]">
+    <div className="mt-20 p-10 bg-indigo-50 dark:bg-[#111] border border-indigo-100 dark:border-neutral-800 rounded-[2rem]">
       <div className="flex items-center gap-3 mb-4">
         <MessageSquare size={18} className="text-indigo-500" />
         <h2 className="text-sm font-black tracking-widest text-indigo-500 uppercase">The Discussion</h2>
       </div>
       
-      <p className="text-2xl font-black text-[#111] mb-8 leading-tight">
+      <p className="text-2xl font-black text-[#111] dark:text-white mb-8 leading-tight">
         {prompt}
       </p>
       
       {/* Input Area */}
       {user ? (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-sm border border-neutral-200 mb-12">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0a0a0a] p-6 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 mb-12">
           <div className="flex gap-4 mb-4">
             <button 
               type="button"
               onClick={() => setStance(stance === 'agree' ? null : 'agree')}
-              className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition ${stance === 'agree' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-neutral-50 text-neutral-500 border-neutral-200 hover:bg-neutral-100'} border`}
+              className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition ${stance === 'agree' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800/50' : 'bg-neutral-50 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800'} border`}
             >
               <ThumbsUp size={14} /> Agree
             </button>
             <button 
               type="button"
               onClick={() => setStance(stance === 'disagree' ? null : 'disagree')}
-              className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition ${stance === 'disagree' ? 'bg-red-100 text-red-700 border-red-200' : 'bg-neutral-50 text-neutral-500 border-neutral-200 hover:bg-neutral-100'} border`}
+              className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition ${stance === 'disagree' ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/50' : 'bg-neutral-50 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-800'} border`}
             >
               <ThumbsDown size={14} /> Disagree
             </button>
@@ -89,7 +89,7 @@ export default function DiscussionBoard({ prompt, postSlug }) {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Add your observation..."
-            className="w-full text-lg p-0 border-none focus:ring-0 resize-none mb-4 min-h-[100px]"
+            className="w-full text-lg p-0 border-none focus:ring-0 resize-none mb-4 min-h-[100px] bg-transparent text-[#111] dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
             required
           />
           <div className="flex justify-end">
@@ -103,10 +103,10 @@ export default function DiscussionBoard({ prompt, postSlug }) {
           </div>
         </form>
       ) : (
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-neutral-200 mb-12 text-center">
+        <div className="bg-white dark:bg-[#0a0a0a] p-8 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 mb-12 text-center">
           <p className="text-neutral-500 font-medium mb-4">You must be an Observer to join the discussion.</p>
           <Link href="/login">
-            <button className="px-6 py-3 bg-black text-white font-black uppercase tracking-widest rounded-xl hover:scale-105 transition">
+            <button className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-widest rounded-xl hover:scale-105 transition">
               Sign In
             </button>
           </Link>
@@ -121,17 +121,17 @@ export default function DiscussionBoard({ prompt, postSlug }) {
           <p className="text-neutral-500 font-medium">No observations yet. Be the first to share your thoughts.</p>
         ) : (
           comments.map(comment => (
-            <div key={comment.id} className="bg-white p-6 rounded-2xl shadow-sm border border-neutral-100 flex flex-col">
+            <div key={comment.id} className="bg-white dark:bg-[#0a0a0a] p-6 rounded-2xl shadow-sm border border-neutral-100 dark:border-neutral-800 flex flex-col">
               <div className="flex justify-between items-center mb-3">
-                <span className="font-bold text-[#111]">{comment.profiles?.display_name || 'Anonymous Observer'}</span>
+                <span className="font-bold text-[#111] dark:text-white">{comment.profiles?.display_name || 'Anonymous Observer'}</span>
                 <span className="text-xs text-neutral-400 font-bold">{new Date(comment.created_at).toLocaleDateString()}</span>
               </div>
               {comment.stance && (
-                <div className={`text-xs font-bold uppercase tracking-widest mb-3 w-fit px-2 py-1 rounded ${comment.stance === 'agree' ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
+                <div className={`text-xs font-bold uppercase tracking-widest mb-3 w-fit px-2 py-1 rounded ${comment.stance === 'agree' ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400' : 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400'}`}>
                   {comment.stance}
                 </div>
               )}
-              <p className="text-neutral-600 leading-relaxed">{comment.content}</p>
+              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">{comment.content}</p>
             </div>
           ))
         )}
