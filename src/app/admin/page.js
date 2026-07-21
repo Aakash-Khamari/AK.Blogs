@@ -15,21 +15,21 @@ export default async function AdminDashboard() {
     <div className="p-8 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
         <div>
-          <h1 className="text-3xl font-black text-[#111] mb-2">Dashboard</h1>
+          <h1 className="text-3xl font-black text-[#111] dark:text-white mb-2">Dashboard</h1>
           <p className="text-neutral-500 font-medium">Manage your archive of observations and notebook entries.</p>
         </div>
         <Link href="/admin/editor">
-          <button className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full font-bold uppercase tracking-widest text-xs hover:scale-105 hover:shadow-lg transition-all">
+          <button className="flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black px-5 py-2.5 rounded-full font-bold uppercase tracking-widest text-xs hover:scale-105 hover:shadow-lg transition-all">
             <Plus size={16} />
             New Entry
           </button>
         </Link>
       </div>
 
-      <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-[#111] rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left whitespace-nowrap min-w-[800px]">
-          <thead className="bg-neutral-50 text-neutral-500 border-b border-neutral-200">
+          <thead className="bg-neutral-50 dark:bg-neutral-900/50 text-neutral-500 border-b border-neutral-200 dark:border-neutral-800">
             <tr>
               <th className="px-6 py-4 text-xs font-black uppercase tracking-widest">Title</th>
               <th className="px-6 py-4 text-xs font-black uppercase tracking-widest">Category</th>
@@ -39,11 +39,11 @@ export default async function AdminDashboard() {
               <th className="px-6 py-4 text-xs font-black uppercase tracking-widest">Date</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-100 text-[#333]">
+          <tbody className="divide-y divide-neutral-100 dark:divide-neutral-900 text-[#333]">
             {posts && posts.length > 0 ? (
               posts.map((post) => (
-                <tr key={post.id} className="hover:bg-neutral-50 transition cursor-pointer">
-                  <td className="px-6 py-4 font-bold text-[#111]">
+                <tr key={post.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition cursor-pointer">
+                  <td className="px-6 py-4 font-bold text-[#111] dark:text-white">
                     <Link href={`/admin/editor/${post.id}`} className="block">
                       {post.title}
                     </Link>
@@ -55,7 +55,7 @@ export default async function AdminDashboard() {
                   </td>
                   <td className="px-6 py-4">
                     <Link href={`/admin/editor/${post.id}`} className="block">
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-widest ${post.published ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-500'}`}>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-widest ${post.published ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400'}`}>
                         {post.published ? 'Published' : 'Draft'}
                       </span>
                     </Link>
