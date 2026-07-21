@@ -94,7 +94,8 @@ export default async function AdminReadingRoom() {
       </div>
 
       <div className="bg-white dark:bg-[#111] rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
-        <table className="w-full text-left">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left whitespace-nowrap min-w-[800px]">
           <thead className="bg-neutral-50 dark:bg-neutral-900/50 text-neutral-500 border-b border-neutral-200 dark:border-neutral-800">
             <tr>
               <th className="px-6 py-4 text-xs font-black uppercase tracking-widest">Title</th>
@@ -127,6 +128,7 @@ export default async function AdminReadingRoom() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

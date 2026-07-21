@@ -13,7 +13,7 @@ export default async function AdminDashboard() {
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
         <div>
           <h1 className="text-3xl font-black text-[#111] mb-2">Dashboard</h1>
           <p className="text-neutral-500 font-medium">Manage your archive of observations and notebook entries.</p>
@@ -27,7 +27,8 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm overflow-hidden">
-        <table className="w-full text-left">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left whitespace-nowrap min-w-[800px]">
           <thead className="bg-neutral-50 text-neutral-500 border-b border-neutral-200">
             <tr>
               <th className="px-6 py-4 text-xs font-black uppercase tracking-widest">Title</th>
@@ -85,6 +86,7 @@ export default async function AdminDashboard() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )

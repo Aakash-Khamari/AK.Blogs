@@ -81,7 +81,8 @@ export default function Newsletter() {
             <button 
               type="submit" 
               disabled={status === 'loading'}
-              className={`${userEmail ? 'w-full' : 'px-8'} py-4 bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-widest rounded-xl hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all disabled:opacity-50 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0`}
+              className={`${userEmail ? 'w-full' : 'px-8'} py-4 bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-widest rounded-xl hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-all disabled:opacity-50 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 truncate`}
+              title={userEmail ? `Join as ${userEmail}` : 'Join'}
             >
               {status === 'loading' ? 'Joining...' : (userEmail ? `Join as ${userEmail}` : 'Join')}
             </button>
