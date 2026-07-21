@@ -122,7 +122,7 @@ export default function NewsletterEditor({ subscriberCount }) {
             </div>
           </div>
 
-          <div className="prose prose-neutral max-w-none">
+          <div className="prose prose-neutral dark:prose-invert max-w-none">
             {content ? (
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {content}

@@ -70,15 +70,15 @@ export default function AdminUsers() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col">
+    <div className="min-h-screen bg-neutral-50 dark:bg-[#0a0a0a] flex flex-col transition-colors duration-500">
       {/* Top Bar */}
-      <header className="bg-white border-b border-neutral-200 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+      <header className="bg-white dark:bg-[#111] border-b border-neutral-200 dark:border-neutral-900 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-6">
-          <Link href="/admin" className="text-neutral-500 hover:text-black transition flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
+          <Link href="/admin" className="text-neutral-500 hover:text-black dark:hover:text-white transition flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
             <ArrowLeft size={16} /> Dashboard
           </Link>
-          <div className="h-6 w-px bg-neutral-300" />
-          <span className="font-black text-lg tracking-tighter flex items-center gap-2">
+          <div className="h-6 w-px bg-neutral-300 dark:bg-neutral-800" />
+          <span className="font-black text-[#111] dark:text-white text-lg tracking-tighter flex items-center gap-2">
             <Users size={18} /> User Management
           </span>
         </div>
@@ -87,11 +87,11 @@ export default function AdminUsers() {
       {/* Main Content */}
       <div className="flex-1 max-w-6xl w-full mx-auto p-6 md:p-12">
         <div className="mb-10">
-          <h1 className="text-3xl font-black text-[#111] mb-2">User Management</h1>
+          <h1 className="text-3xl font-black text-[#111] dark:text-white mb-2">User Management</h1>
           <p className="text-neutral-500 font-medium">Manage permissions and remove accounts.</p>
         </div>
 
-        <div className="bg-white rounded-3xl border border-neutral-200 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-[#111] rounded-3xl border border-neutral-200 dark:border-neutral-800 shadow-sm overflow-hidden">
           {loading ? (
             <div className="flex justify-center py-20 text-neutral-400">
               <Loader2 className="animate-spin" size={32} />
@@ -104,7 +104,7 @@ export default function AdminUsers() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-neutral-100 border-b border-neutral-200">
+                  <tr className="bg-neutral-100 dark:bg-neutral-900/50 border-b border-neutral-200 dark:border-neutral-800">
                     <th className="p-4 text-xs font-black uppercase tracking-widest text-neutral-500">Name</th>
                     <th className="p-4 text-xs font-black uppercase tracking-widest text-neutral-500">Email</th>
                     <th className="p-4 text-xs font-black uppercase tracking-widest text-neutral-500">Role</th>
@@ -112,14 +112,14 @@ export default function AdminUsers() {
                     <th className="p-4 text-xs font-black uppercase tracking-widest text-neutral-500">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100">
+                <tbody className="divide-y divide-neutral-100 dark:divide-neutral-900">
                   {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-neutral-50 transition">
-                      <td className="p-4 font-bold text-[#111]">{user.display_name || 'Anonymous'}</td>
+                    <tr key={user.id} className="hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition">
+                      <td className="p-4 font-bold text-[#111] dark:text-white">{user.display_name || 'Anonymous'}</td>
                       <td className="p-4 text-neutral-500 text-sm">{user.email}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-black uppercase tracking-widest flex items-center w-max gap-1 ${
-                          user.role === 'admin' ? 'bg-indigo-100 text-indigo-700' : 'bg-neutral-100 text-neutral-600'
+                          user.role === 'admin' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400' : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-400'
                         }`}>
                           {user.role === 'admin' && <Shield size={12} />}
                           {user.role}

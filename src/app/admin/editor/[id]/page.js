@@ -105,26 +105,26 @@ export default function AdminEditorEdit() {
   if (loading) return <div className="min-h-screen bg-neutral-50 p-12 text-neutral-500 font-medium">Loading post...</div>
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col">
+    <div className="min-h-screen bg-neutral-50 dark:bg-[#0a0a0a] flex flex-col transition-colors duration-500">
       {/* Top Bar */}
-      <header className="bg-white border-b border-neutral-200 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+      <header className="bg-white dark:bg-[#111] border-b border-neutral-200 dark:border-neutral-900 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <div className="flex items-center gap-6">
-          <Link href="/admin" className="text-neutral-500 hover:text-black transition flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
+          <Link href="/admin" className="text-neutral-500 hover:text-black dark:hover:text-white transition flex items-center gap-2 text-sm font-bold uppercase tracking-widest">
             <ArrowLeft size={16} /> Dashboard
           </Link>
-          <div className="h-6 w-px bg-neutral-300" />
-          <span className="font-black text-lg tracking-tighter">Edit {postType === 'observation' ? 'Observation' : (postType === 'notebook' ? 'Notebook Entry' : 'Reading Room')}</span>
+          <div className="h-6 w-px bg-neutral-300 dark:bg-neutral-800" />
+          <span className="font-black text-lg tracking-tighter dark:text-white">Edit {postType === 'observation' ? 'Observation' : (postType === 'notebook' ? 'Notebook Entry' : 'Reading Room')}</span>
         </div>
         <div className="flex items-center gap-4">
           <button 
             onClick={(e) => handleSave(e, false)}
-            className="text-neutral-500 font-bold uppercase tracking-widest text-xs hover:text-black transition"
+            className="text-neutral-500 font-bold uppercase tracking-widest text-xs hover:text-black dark:hover:text-white transition"
           >
             Save as Draft
           </button>
           <button 
             onClick={(e) => handleSave(e, true)}
-            className="flex items-center gap-2 bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-neutral-800 transition"
+            className="flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-neutral-800 dark:hover:bg-neutral-200 transition"
           >
             <Save size={16} /> Publish Changes
           </button>
@@ -135,28 +135,28 @@ export default function AdminEditorEdit() {
       <div className="flex-1 max-w-6xl w-full mx-auto p-6 md:p-12">
         
         {/* Post Type Toggle */}
-        <div className="flex p-1 bg-neutral-200 rounded-2xl mb-12 w-fit">
+        <div className="flex p-1 bg-neutral-200 dark:bg-neutral-800 rounded-2xl mb-12 w-fit">
           <button 
             onClick={() => setPostType('observation')}
-            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'observation' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
+            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'observation' ? 'bg-white dark:bg-[#111] shadow-sm text-black dark:text-white' : 'text-neutral-500 hover:text-black dark:hover:text-white'}`}
           >
             Observation
           </button>
           <button 
             onClick={() => setPostType('notebook')}
-            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'notebook' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
+            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'notebook' ? 'bg-white dark:bg-[#111] shadow-sm text-black dark:text-white' : 'text-neutral-500 hover:text-black dark:hover:text-white'}`}
           >
             Notebook Entry
           </button>
           <button 
             onClick={() => setPostType('reading_room')}
-            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'reading_room' ? 'bg-white shadow-sm text-black' : 'text-neutral-500 hover:text-black'}`}
+            className={`px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all ${postType === 'reading_room' ? 'bg-white dark:bg-[#111] shadow-sm text-black dark:text-white' : 'text-neutral-500 hover:text-black dark:hover:text-white'}`}
           >
             Reading Room
           </button>
         </div>
 
-        <div className="space-y-8 bg-white p-8 md:p-12 rounded-[2rem] border border-neutral-100 shadow-sm">
+        <div className="space-y-8 bg-white dark:bg-[#111] p-8 md:p-12 rounded-[2rem] border border-neutral-100 dark:border-neutral-800 shadow-sm">
           {/* Common Fields */}
           <div>
             <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-3">Title</label>
@@ -165,7 +165,7 @@ export default function AdminEditorEdit() {
               placeholder="e.g. The ₹500 Withdrawal..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full text-4xl font-black text-[#111] placeholder:text-neutral-300 border-none focus:outline-none focus:ring-0 p-0"
+              className="w-full text-4xl font-black text-[#111] dark:text-white dark:bg-transparent placeholder:text-neutral-300 dark:placeholder:text-neutral-700 border-none focus:outline-none focus:ring-0 p-0"
             />
           </div>
           
@@ -177,19 +177,19 @@ export default function AdminEditorEdit() {
                 placeholder="e.g. Finance, Psychology..."
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full text-lg font-medium border-b border-neutral-200 focus:border-black focus:outline-none py-2"
+                className="w-full text-lg font-medium border-b border-neutral-200 dark:border-neutral-800 focus:border-black dark:focus:border-white focus:outline-none py-2 dark:bg-transparent dark:text-white"
               />
             </div>
             <div className="flex-1">
               <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-3">Cover Image URL</label>
-              <div className="flex items-center gap-2 border-b border-neutral-200 py-2">
+              <div className="flex items-center gap-2 border-b border-neutral-200 dark:border-neutral-800 py-2">
                 <ImageIcon size={18} className="text-neutral-400" />
                 <input 
                   type="text" 
                   placeholder="https://..."
                   value={coverImageUrl}
                   onChange={(e) => setCoverImageUrl(e.target.value)}
-                  className="w-full text-lg font-medium focus:outline-none"
+                  className="w-full text-lg font-medium focus:outline-none dark:bg-transparent dark:text-white"
                 />
               </div>
               {coverImageUrl && (
@@ -214,7 +214,7 @@ export default function AdminEditorEdit() {
                   placeholder="What happened? Set the scene..."
                   value={storyContent}
                   onChange={(e) => setStoryContent(e.target.value)}
-                  className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-lg leading-relaxed border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-[#1a1a1a] dark:text-white"
                 />
               </div>
               
@@ -227,7 +227,7 @@ export default function AdminEditorEdit() {
                   placeholder="What did this make you realize?"
                   value={reflection}
                   onChange={(e) => setReflection(e.target.value)}
-                  className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-lg leading-relaxed border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-[#1a1a1a] dark:text-white"
                 />
               </div>
 
@@ -240,7 +240,7 @@ export default function AdminEditorEdit() {
                   placeholder="How does this tie into society, data, or broader trends?"
                   value={biggerPicture}
                   onChange={(e) => setBiggerPicture(e.target.value)}
-                  className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-lg leading-relaxed border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-[#1a1a1a] dark:text-white"
                 />
               </div>
 
@@ -253,7 +253,7 @@ export default function AdminEditorEdit() {
                   placeholder="e.g. Should financial literacy be mandatory?"
                   value={questions}
                   onChange={(e) => setQuestions(e.target.value)}
-                  className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-lg leading-relaxed border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-[#1a1a1a] dark:text-white"
                 />
               </div>
 
@@ -266,7 +266,7 @@ export default function AdminEditorEdit() {
                   placeholder="Context about when/where you wrote this..."
                   value={behindTheStory}
                   onChange={(e) => setBehindTheStory(e.target.value)}
-                  className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-lg leading-relaxed border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-[#1a1a1a] dark:text-white"
                 />
               </div>
             </div>
@@ -281,7 +281,7 @@ export default function AdminEditorEdit() {
                   placeholder="Write your structural thoughts here..."
                   value={notebookContent}
                   onChange={(e) => setNotebookContent(e.target.value)}
-                  className="w-full text-lg leading-relaxed border border-neutral-200 rounded-xl p-6 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-lg leading-relaxed border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-[#1a1a1a] dark:text-white"
                 />
               </div>
 
@@ -294,7 +294,7 @@ export default function AdminEditorEdit() {
                   placeholder="One thought-provoking question to spark debate..."
                   value={discussionPrompt}
                   onChange={(e) => setDiscussionPrompt(e.target.value)}
-                  className="w-full text-2xl font-black border-b border-neutral-200 py-2 focus:border-black focus:outline-none resize-none"
+                  className="w-full text-2xl font-black border-b border-neutral-200 dark:border-neutral-800 py-2 focus:border-black dark:focus:border-white focus:outline-none resize-none dark:bg-transparent dark:text-white"
                 />
               </div>
             </div>
