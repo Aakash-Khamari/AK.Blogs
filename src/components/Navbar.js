@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="w-full p-6 flex justify-between items-center z-50 relative">
+      <header className="w-full p-6 flex justify-between items-center z-[60] relative">
         <Link href="/">
           <div className="text-2xl font-black tracking-tighter text-[#111] dark:text-white hover:opacity-70 transition">
             Aakash<span className="text-red-500">Khamari</span>
